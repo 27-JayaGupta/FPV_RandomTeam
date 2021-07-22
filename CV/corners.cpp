@@ -13,7 +13,7 @@ const double epsilon=1;
 
 int main() {
 
-    std::string image_path = "/home/pratyush/Desktop/CV/pic5.png";
+    std::string image_path = "/home/jaya/Github/FPV_RandomTeam/CV/B1.png";
     cv::Mat img,thresh,corn;
     img = cv::imread(image_path, CV_LOAD_IMAGE_ANYCOLOR);
     if(img.empty()) 
