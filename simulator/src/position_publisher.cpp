@@ -71,7 +71,8 @@ int main(int argc,char **argv){
         i++;
         loopRate.sleep();
     }
-    z_avg=z_avg/loopRate;
+    int frame_rate=30;
+    z_avg=z_avg/frame_rate;
 
     float x_lab_initial=x_lab;
     float y_lab_initial=y_lab;
