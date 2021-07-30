@@ -16,8 +16,21 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   geometry_msgs
   trajectory_msgs
+  mav_msgs
+
   # opencv2
 )
+
+add_definitions(-std=c++11)
+set(CMAKE_BUILD_TYPE Release)
+
+find_package(Eigen3 REQUIRED)
+include_directories(${Eigen_INCLUDE_DIRS})
+
+find_package(OpenCV)
+include_directories(${OpenCV_INCLUDE_DIRS})
+
+
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -121,6 +134,7 @@ catkin_package(
                 image_transport
                 message_runtime
                 trajectory_msgs
+                mav_msgs
 #  DEPENDS system_lib
 )
 
@@ -150,6 +164,7 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(image_converter src/image_converter.cpp)
 add_executable(position_publisher src/position_publisher.cpp)
+add_executable(planner src/planner.cxx)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -162,6 +177,9 @@ add_executable(position_publisher src/position_publisher.cpp)
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
+
+target_link_libraries(image_converter ${OpenCV_LIBRARIES})
+
 target_link_libraries(image_converter
   ${catkin_LIBRARIES}
 )
@@ -169,6 +187,14 @@ target_link_libraries(image_converter
 target_link_libraries(position_publisher
   ${catkin_LIBRARIES}
 )
+
+target_link_libraries(planner
+  ${Eigen_LIBRARIES}
+  ${catkin_LIBRARIES}
+  ${OpenCV_LIBRARIES}
+)
+
+
 #############
 ## Install ##
 #############
@@ -224,6 +250,35 @@ target_link_libraries(position_publisher
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-find_package(OpenCV)
-include_directories(${OpenCV_INCLUDE_DIRS})
-target_link_libraries(image_converter ${OpenCV_LIBRARIES})
+
+
+
+
+##########################################################################
+# cmake_minimum_required(VERSION 3.0.2)
+# project(simulator)
+
+# find_package(catkin REQUIRED)
+# find_package(catkin_simple REQUIRED)
+# catkin_simple()
+
+# add_definitions(-std=c++11)
+# set(CMAKE_BUILD_TYPE Release)
+
+# find_package(Eigen3 REQUIRED)
+# include_directories(${Eigen_INCLUDE_DIRS})
+
+# find_package(GeographicLib REQUIRED)
+# include_directories(${GeographicLib_INCLUDE_DIRS})
+
+# # cs_add_executable(planner_test src/planner_test.cxx)
+
+# cs_add_executable(planner src/planner.cxx)
+# cs_add_executable(router src/router.cxx)
+
+# cs_add_executable(planner2 src/planner2.cxx)
+# target_link_libraries(planner2 ${GeographicLib_LIBRARIES})
+
+# cs_install()
+# cs_export()
+

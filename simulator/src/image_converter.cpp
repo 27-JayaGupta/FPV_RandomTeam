@@ -51,7 +51,7 @@
    
         // Update GUI Window
         cv::Mat img=cv_ptr->image;
-        cv::imshow(OPENCV_WINDOW, img);
+        // cv::imshow(OPENCV_WINDOW, img);
 
         cv::Mat final=FinalContour(img);   //Center is a function defined in header file final_contour.h  //getting fianl Contour selected
 
